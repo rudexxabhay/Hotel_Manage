@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserSecret, faEnvelope, faLock } from "@fortawesome/free-solid-svg-icons";
 const BASE_URL = import.meta.env.VITE_BASE_URL;
+console.log("base", BASE_URL)
 import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -22,6 +23,7 @@ function Register() {
   const [formData, dispatch] = useReducer(formReducer, initialState);
   console.log(formData)
   const handleSubmit = async (e) => {
+    console.log(BASE_URL)
     e.preventDefault();
     setLoading(true);
     if(state === "Sign up"){
