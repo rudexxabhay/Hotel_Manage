@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSignOutAlt, faUser, faCog } from "@fortawesome/free-solid-svg-icons";
 import logo from "../src/assets/pink-blue-abstract-logo.png";
 import { toast } from "react-toastify";
-import { BASE_URL } from '../axios.jsx';
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 import axios from "axios";
 import { useNavigate, Link , useLocation } from "react-router-dom";
 

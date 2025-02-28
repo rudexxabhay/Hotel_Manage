@@ -2,7 +2,7 @@
 import { useReducer, useState } from "react";
 import { motion } from "framer-motion";
 import axios from 'axios'
-import { BASE_URL } from "../../axios";
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 import { toast } from "react-toastify";
 const formReducer = (form, action) => {
     if(action.type === "RESET" ) return {...initialData}

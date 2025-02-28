@@ -2,7 +2,7 @@ import {useState} from 'react'
 import Home from './Home.jsx'
 import Listings from './Lishtings.jsx'
 import Modal from './Model.jsx'
-import { BASE_URL } from '../../axios.jsx'
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 import axios from 'axios'
 import { toast } from 'react-toastify'
 function HomePage() {

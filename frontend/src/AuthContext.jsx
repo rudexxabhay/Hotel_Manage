@@ -1,6 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
 import { createContext, useEffect, useState } from "react";
-import { BASE_URL } from "../axios";
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 import axios from "axios";
 
 export const AuthContext = createContext();

@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { BASE_URL } from "../../axios";
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 import axios from "axios";
 const Rating = ({listingId,setItem}) => {
   console.log("Tihs is lid", listingId)

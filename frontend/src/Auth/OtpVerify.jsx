@@ -1,5 +1,5 @@
 import  { useState, useRef } from "react";
-import { BASE_URL } from "../../axios";
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 import { useLocation, useNavigate } from "react-router-dom";
 import {  toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";

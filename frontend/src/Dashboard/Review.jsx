@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { toast } from "react-toastify";
 import axios from "axios";
-import { BASE_URL } from "../../axios";
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 import { useEffect, useState } from "react";
 function Review({listingId, item}) {
   console.log("Tihs is lid", item)

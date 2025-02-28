@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {  faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { BASE_URL } from '../../axios';
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 import axios from 'axios'; 
 
 function ForgetPass() {

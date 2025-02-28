@@ -2,7 +2,7 @@ import  {useContext, useReducer, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserSecret, faEnvelope, faLock } from "@fortawesome/free-solid-svg-icons";
-import { BASE_URL } from "../../axios";
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Rating from "./Rating";
 import axios from "axios";
-import { BASE_URL } from "../../axios";
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 import { useParams, useNavigate } from "react-router-dom";
 import Review from "./Review";
 
