@@ -9,10 +9,12 @@ import { authRouter } from './Route/AuthRoute.js';
 const app = express();
 const PORT = process.env.PORT || 3000;
 connectDB();
-const allowedOrigins = ['http://localhost:5173']
+const allowedOrigins = process.env.CORS_ORIGIN?.split(",") || [];
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors({origin: allowedOrigins, credentials: true}));
+app.use(cors({origin: allowedOrigins,
+              credentials: true
+             }));
 
 
 
