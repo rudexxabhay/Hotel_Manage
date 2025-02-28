@@ -69,7 +69,7 @@ export const login = async (req, res) => {
       res.cookie("token", token, {
          httpOnly: true, // Security: Cookie can't be accessed by JavaScript
          secure: process.env.NODE_ENV === "production", // HTTPS in production
-         sameSite: "strict", // Prevent CSRF attacks
+         sameSite: "none", // Prevent CSRF attacks
          maxAge: 7 * 24 * 60 * 60 * 1000, // 7 Days
       });
       res.json({ success: true, message: "Login success" })
@@ -123,7 +123,7 @@ export const verifyOtp = async (req, res) => {
          {
             httpOnly: true, // Prevent client-side access
             secure: process.env.NODE_ENV === "production", // Secure only in production
-            sameSite: "Strict", // CSRF protection
+            sameSite: "none", // CSRF protection
             maxAge: 3600000, // 1 hour
          }
       );
