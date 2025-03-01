@@ -134,11 +134,14 @@ export const verifyOtp = async (req, res) => {
 export const logout = async (req, res) => {
    res.clearCookie("token", {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production", // Ensure cookies are only sent over HTTPS in production
-      sameSite: "strict", // Protects against CSRF attacks
+      secure: process.env.NODE_ENV === "production", // HTTPS in production
+      sameSite: "None", // Required for cross-site cookies
+      path: "/", // Must match the path where cookie was set
+      domain: "hotel-management-iva4.onrender.com", // Ensure correct domain
    });
    res.json({ success: true, message: "Logged out successfully" });
 };
+
 
 
 export const forgetPass = async (req, res) => {
