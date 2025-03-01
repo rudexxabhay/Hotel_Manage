@@ -15,7 +15,7 @@ authRouter.post("/verify-pass", verifyForgetPass);
 authRouter.post("/reset-pass", resetPass);
 authRouter.post("/auth-user", AuthUser, AuthUsers);
 authRouter.get("/isowner", UserIDMiddleware, checkOwner, isOwner);
-authRouter.get("/all-listing", UserIDMiddleware, checkOwner, allListing);
+authRouter.get("/all-listing", UserIDMiddleware, allListing);
 authRouter.get("/listing/:id", listing);
 authRouter.post("/new-listing", UserIDMiddleware, upload.single("image"), createListing);
 authRouter.post("/:id/review", UserIDMiddleware, addReview); 
