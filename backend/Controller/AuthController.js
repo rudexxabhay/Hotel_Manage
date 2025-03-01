@@ -132,9 +132,14 @@ export const verifyOtp = async (req, res) => {
 }
 
 export const logout = async (req, res) => {
-   res.clearCookie("token");
+   res.clearCookie("token", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production", // Ensure cookies are only sent over HTTPS in production
+      sameSite: "strict", // Protects against CSRF attacks
+   });
    res.json({ success: true, message: "Logged out successfully" });
-}
+};
+
 
 export const forgetPass = async (req, res) => {
    const { email } = req.body;
