@@ -39,7 +39,7 @@ function Navbar() {
   const handleLogout = async () => {
     setLoding(true);
     try {
-      const response = await axios.get(`${BASE_URL}/user/logout`, { withCredentials: true });
+      const response = await axios.get(`${BASE_URL}/user/logout`,);
       if (response.data.success) {
         toast.success("👋 Logout successful!", { autoClose: 3000 });
         setUserMenuOpen(false);
