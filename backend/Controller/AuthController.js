@@ -65,12 +65,21 @@ export const login = async (req, res) => {
    { expiresIn: "7d" }
 );
 
+<<<<<<< HEAD
 res.cookie("token", token, {
    httpOnly: true, // Security: Prevent JS Access
    secure: true, // Ensure it's always secure (Required for `sameSite: "none"`)
    sameSite: "none", // Required for cross-origin cookies
    maxAge: 7 * 24 * 60 * 60 * 1000, // 7 Days
 });
+=======
+      res.cookie("token", token, {
+         httpOnly: true, // Security: Prevent JS Access
+         secure: true, // Ensure it's always secure (Required for `sameSite: "none"`)
+         sameSite: "none", // Required for cross-origin cookies
+         maxAge: 7 * 24 * 60 * 60 * 1000, // 7 Days
+      });
+>>>>>>> 285962f (Initial commit)
       res.json({ success: true, message: "Login success" })
    } catch (error) {
       res.json({ success: false, message: error.message });
@@ -113,6 +122,7 @@ export const verifyOtp = async (req, res) => {
       //Creating token
 
       const token = jwt.sign(
+<<<<<<< HEAD
    { userId: user._id, email: user.email },
    process.env.JWT_SECRET,
    { expiresIn: "7d" }
@@ -124,6 +134,19 @@ res.cookie("token", token, {
    sameSite: "none", // Required for cross-origin cookies
    maxAge: 7 * 24 * 60 * 60 * 1000, // 7 Days
 });
+=======
+         { userId: user._id, email: user.email },
+         process.env.JWT_SECRET,
+         { expiresIn: "7d" }
+      );
+
+      res.cookie("token", token, {
+         httpOnly: true, // Security: Prevent JS Access
+         secure: true, // Ensure it's always secure (Required for `sameSite: "none"`)
+         sameSite: "none", // Required for cross-origin cookies
+         maxAge: 7 * 24 * 60 * 60 * 1000, // 7 Days
+      });
+>>>>>>> 285962f (Initial commit)
 
       return res.json({ success: true, message: "User verified successfully" });
    } catch (error) {
@@ -230,8 +253,8 @@ export const AuthUsers = async (req, res) => {
    res.json({ success: true, isLogin: true })
 }
 
-export const isOwner = async( req, res)=>{
-   res.json({success: true, message: "Verification Success"})
+export const isOwner = async (req, res) => {
+   res.json({ success: true, message: "Verification Success" })
 }
 
 export const createListing = async (req, res) => {
@@ -259,7 +282,7 @@ export const createListing = async (req, res) => {
       const imageUrl = result.secure_url
 
       const item = new UserHotelModel({
-         userId:req.userId,
+         userId: req.userId,
          name,
          location,
          facility,
@@ -271,7 +294,7 @@ export const createListing = async (req, res) => {
       })
       await item.save();
 
-      res.json({success: true,  message: "Upload success",item})
+      res.json({ success: true, message: "Upload success", item })
 
    } catch (error) {
       console.error(error);
@@ -279,38 +302,38 @@ export const createListing = async (req, res) => {
    }
 }
 
-export const allListing = async(req,res)=>{
-try {
-   const allListing = await UserHotelModel.find({})
-   if(allListing){
-     res.json({success: true, message: "All Listing", allListing})
-   }
-   
-   
-} catch (error) {
-   console.error(error);
+export const allListing = async (req, res) => {
+   try {
+      const allListing = await UserHotelModel.find({})
+      if (allListing) {
+         res.json({ success: true, message: "All Listing", allListing })
+      }
+
+
+   } catch (error) {
+      console.error(error);
       res.json({ error: error.message });
-}
+   }
 }
 
-export const listing = async(req,res)=>{
+export const listing = async (req, res) => {
    try {
       const list = await UserHotelModel.findById(req.params.id)
-    if(!list){
-      return res.json({success: false, message: "Not found"})
-    }
-    res.json({success: true , message: "Fetched" , list})
+      if (!list) {
+         return res.json({ success: false, message: "Not found" })
+      }
+      res.json({ success: true, message: "Fetched", list })
    } catch (error) {
       console.error(error);
       res.json({ error: error.message });
    }
 }
 
-export const addReview = async(req,res)=>{
-   const {rating, comment} =  req.body;
-   const {id} = req.params;
-    // Check if fields are missing
-    if (!rating || !comment) {
+export const addReview = async (req, res) => {
+   const { rating, comment } = req.body;
+   const { id } = req.params;
+   // Check if fields are missing
+   if (!rating || !comment) {
       return res.status(400).json({ success: false, message: "Fields required" });
    }
    try {
@@ -333,42 +356,46 @@ export const addReview = async(req,res)=>{
       res.json({ success: true, message: "Review added successfully!" });
 
    } catch (error) {
-      res.json({success: false, message: error.message})
+      res.json({ success: false, message: error.message })
    }
 }
 
-export const showReview = async(req,res)=>{
-   const {id} = req.params;
+export const showReview = async (req, res) => {
+   const { id } = req.params;
    try {
       const review = await UserHotelModel.findById(id);
-     res.json({success: true , message: "updated", review})
+      res.json({ success: true, message: "updated", review })
    } catch (error) {
-      res.json({success: false, message: error.message})
+      res.json({ success: false, message: error.message })
    }
 }
 export const delReview = async (req, res) => {
    const { hotelId, reviewId } = req.params;
- 
+
    try {
-     const hotel = await UserHotelModel.findById(hotelId);
-     if (!hotel) {
-       return res.status(404).json({ success: false, message: "Hotel not found" });
-     }
-     const reviewExists = hotel.reviews.some((review) => review._id.toString() === reviewId);
-     if (!reviewExists) {
-       return res.status(404).json({ success: false, message: "Review not found" });
-     }
- 
-     await UserHotelModel.findByIdAndUpdate(
-       hotelId,
-       { $pull: { reviews: { _id: reviewId } } },
-       { new: true }
-     );
- 
-     res.json({ success: true, message: "Review deleted successfully" });
- 
+      const hotel = await UserHotelModel.findById(hotelId);
+      if (!hotel) {
+         return res.status(404).json({ success: false, message: "Hotel not found" });
+      }
+      const reviewExists = hotel.reviews.some((review) => review._id.toString() === reviewId);
+      if (!reviewExists) {
+         return res.status(404).json({ success: false, message: "Review not found" });
+      }
+
+      await UserHotelModel.findByIdAndUpdate(
+         hotelId,
+         { $pull: { reviews: { _id: reviewId } } },
+         { new: true }
+      );
+
+      res.json({ success: true, message: "Review deleted successfully" });
+
    } catch (error) {
-     res.status(500).json({ success: false, message: error.message });
+      res.status(500).json({ success: false, message: error.message });
    }
+<<<<<<< HEAD
  };
  
+=======
+};
+>>>>>>> 285962f (Initial commit)
