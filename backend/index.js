@@ -12,14 +12,8 @@ connectDB();
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({origin: "https://hotel-management-1-11ac.onrender.com",
-<<<<<<< HEAD
               credentials: true
              }));
-=======
-    credentials: true
-   }));
->>>>>>> 285962f (Initial commit)
-
 
 
 app.get("/",(req,res)=>{
