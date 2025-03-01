@@ -60,18 +60,17 @@ export const login = async (req, res) => {
       }
 
       const token = jwt.sign(
-         { userId: user._id, email: user.email },
-         process.env.JWT_SECRET,
-         { expiresIn: "7d" }
-      );
+   { userId: user._id, email: user.email },
+   process.env.JWT_SECRET,
+   { expiresIn: "7d" }
+);
 
-
-      res.cookie("token", token, {
-         httpOnly: true, // Security: Cookie can't be accessed by JavaScript
-         secure: process.env.NODE_ENV === "production", // HTTPS in production
-         sameSite: "none", // Prevent CSRF attacks
-         maxAge: 7 * 24 * 60 * 60 * 1000, // 7 Days
-      });
+res.cookie("token", token, {
+   httpOnly: true, // Security: Prevent JS Access
+   secure: true, // Ensure it's always secure (Required for `sameSite: "none"`)
+   sameSite: "none", // Required for cross-origin cookies
+   maxAge: 7 * 24 * 60 * 60 * 1000, // 7 Days
+});
       res.json({ success: true, message: "Login success" })
    } catch (error) {
       res.json({ success: false, message: error.message });
@@ -114,19 +113,17 @@ export const verifyOtp = async (req, res) => {
       //Creating token
 
       const token = jwt.sign(
-         { id: user._id, email: user.email }, // Payload (user data)
-         process.env.JWT_SECRET, // Secret key
-         { expiresIn: "1h" } // Token expiration time
-      );
+   { userId: user._id, email: user.email },
+   process.env.JWT_SECRET,
+   { expiresIn: "7d" }
+);
 
-      res.cookie("token", token,
-         {
-            httpOnly: true, // Prevent client-side access
-            secure: process.env.NODE_ENV === "production", // Secure only in production
-            sameSite: "none", // CSRF protection
-            maxAge: 3600000, // 1 hour
-         }
-      );
+res.cookie("token", token, {
+   httpOnly: true, // Security: Prevent JS Access
+   secure: true, // Ensure it's always secure (Required for `sameSite: "none"`)
+   sameSite: "none", // Required for cross-origin cookies
+   maxAge: 7 * 24 * 60 * 60 * 1000, // 7 Days
+});
 
       return res.json({ success: true, message: "User verified successfully" });
    } catch (error) {
