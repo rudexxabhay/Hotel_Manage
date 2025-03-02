@@ -65,12 +65,21 @@ export const login = async (req, res) => {
    { expiresIn: "7d" }
 );
 
+<<<<<<< HEAD
 res.cookie("token", token, {
    httpOnly: true, // Security: Prevent JS Access
    secure: true, // Ensure it's always secure (Required for `sameSite: "none"`)
    sameSite: "none", // Required for cross-origin cookies
    maxAge: 7 * 24 * 60 * 60 * 1000, // 7 Days
 });
+=======
+      res.cookie("token", token, {
+         httpOnly: true, // Security: Prevent JS Access
+         secure: true, // Ensure it's always secure (Required for `sameSite: "none"`)
+         sameSite: "none", // Required for cross-origin cookies
+         maxAge: 7 * 24 * 60 * 60 * 1000, // 7 Days
+      });
+>>>>>>> 208632d0a01401ae1d10e37efd1892b1d8cd1c23
       res.json({ success: true, message: "Login success" })
    } catch (error) {
       res.json({ success: false, message: error.message });
@@ -113,6 +122,7 @@ export const verifyOtp = async (req, res) => {
       //Creating token
 
       const token = jwt.sign(
+<<<<<<< HEAD
    { userId: user._id, email: user.email },
    process.env.JWT_SECRET,
    { expiresIn: "7d" }
@@ -124,6 +134,19 @@ res.cookie("token", token, {
    sameSite: "none", // Required for cross-origin cookies
    maxAge: 7 * 24 * 60 * 60 * 1000, // 7 Days
 });
+=======
+         { userId: user._id, email: user.email },
+         process.env.JWT_SECRET,
+         { expiresIn: "7d" }
+      );
+
+      res.cookie("token", token, {
+         httpOnly: true, // Security: Prevent JS Access
+         secure: true, // Ensure it's always secure (Required for `sameSite: "none"`)
+         sameSite: "none", // Required for cross-origin cookies
+         maxAge: 7 * 24 * 60 * 60 * 1000, // 7 Days
+      });
+>>>>>>> 208632d0a01401ae1d10e37efd1892b1d8cd1c23
 
       return res.json({ success: true, message: "User verified successfully" });
    } catch (error) {
@@ -132,9 +155,17 @@ res.cookie("token", token, {
 }
 
 export const logout = async (req, res) => {
-   res.clearCookie("token");
+   res.clearCookie("token", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production", // HTTPS in production
+      sameSite: "None", // Required for cross-site cookies
+      path: "/", // Must match the path where cookie was set
+      domain: "hotel-management-iva4.onrender.com", // Ensure correct domain
+   });
    res.json({ success: true, message: "Logged out successfully" });
-}
+};
+
+
 
 export const forgetPass = async (req, res) => {
    const { email } = req.body;
@@ -370,5 +401,9 @@ export const delReview = async (req, res) => {
    } catch (error) {
       res.status(500).json({ success: false, message: error.message });
    }
+<<<<<<< HEAD
  };
  
+=======
+};
+>>>>>>> 208632d0a01401ae1d10e37efd1892b1d8cd1c23

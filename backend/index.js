@@ -11,9 +11,15 @@ const PORT = process.env.PORT || 3000;
 connectDB();
 app.use(express.json());
 app.use(cookieParser());
+<<<<<<< HEAD
 app.use(cors({origin: "http://localhost:5173",
               credentials: true
              }));
+=======
+app.use(cors({origin: "https://rudexx.vercel.app",
+    credentials: true
+   }));
+>>>>>>> 208632d0a01401ae1d10e37efd1892b1d8cd1c23
 
 
 app.get("/",(req,res)=>{

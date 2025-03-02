@@ -37,19 +37,26 @@ function Navbar() {
   const handleLogout = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(`${BASE_URL}/user/logout`, { withCredentials: true });
+      const response = await axios.get(`${BASE_URL}/user/logout`, {
+        withCredentials: true, // ✅ Correct placement
+      });
+
       if (response.data.success) {
         toast.success("👋 Logout successful!", { autoClose: 3000 });
         setUserMenuOpen(false);
         setIsLoggedIn(false);
         navigate("/");
+<<<<<<< HEAD
+=======
+        setIsLoggedIn(false);
+>>>>>>> 208632d0a01401ae1d10e37efd1892b1d8cd1c23
       }
     } catch (error) {
       toast.error("❌ Logout failed! " + error.message);
     } finally {
       setLoading(false);
     }
-  };
+};
 
   return (
     <nav className="sticky top-0 bg-white shadow-md z-20">
