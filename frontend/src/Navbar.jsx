@@ -46,10 +46,6 @@ function Navbar() {
         setUserMenuOpen(false);
         setIsLoggedIn(false);
         navigate("/");
-<<<<<<< HEAD
-=======
-        setIsLoggedIn(false);
->>>>>>> 208632d0a01401ae1d10e37efd1892b1d8cd1c23
       }
     } catch (error) {
       toast.error("❌ Logout failed! " + error.message);

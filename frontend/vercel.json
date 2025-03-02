@@ -1,19 +1,7 @@
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
-=======
-    "rewrites": [
-      { "source": "/(.*)", "destination": "/index.html" }
-    ]
-  }
->>>>>>> 285962f (Initial commit)
-=======
-    "rewrites": [
-      { "source": "/(.*)", "destination": "/index.html" }
-    ]
-  }
->>>>>>> 208632d0a01401ae1d10e37efd1892b1d8cd1c23
+
+ 
