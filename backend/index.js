@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 3000;
 connectDB();
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors({origin: "https://hotel-management-1-11ac.onrender.com",
+app.use(cors({origin: "http://localhost:5173",
               credentials: true
              }));
 
