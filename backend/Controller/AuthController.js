@@ -131,10 +131,20 @@ res.cookie("token", token, {
    }
 }
 
-export const logout = async(req, res) => {
-   res.clearCookie("token");
+export const logout = async (req, res) => {
+   console.log("Logout function called");
+   console.log("Cookies before clearing:", req.cookies);
+   
+   res.clearCookie("token", {
+      httpOnly: true,
+      secure: true,
+      sameSite: "None",
+   });
+
+   console.log("Cookies after clearing:", req.cookies);
    res.json({ success: true, message: "Logout success" });
 };
+
 
 
 export const forgetPass = async (req, res) => {
