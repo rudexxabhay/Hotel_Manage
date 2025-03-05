@@ -19,7 +19,7 @@ const initialData = {
     contact: ""
 };
 
-function Modal({ open, close, item }) {
+function Modal({handleClose}) {
     const [image, setImage] = useState(null);
     const [form, dispatch] = useReducer(formReducer, initialData);
     const [loding, setLoding] = useState(false);
@@ -52,12 +52,7 @@ function Modal({ open, close, item }) {
             );
             if(response.data.success){
                 toast(response.data.message);
-                item(response.data.item);
-
             }
-            
-            
-
             setLoding(false);
             setImage(null)
             dispatch({ type: "RESET" });
@@ -67,20 +62,19 @@ function Modal({ open, close, item }) {
         }
     };
 
-      
-    if (!open) return null; 
+    
     
     return (
-        <div className="fixed px-4 inset-0 flex  items-center  justify-center bg-blue-300 shado">
+        <div className=" px-3 py-2 flex ">
         <motion.div
             initial={{ opacity: 0, scale: 0.8 }}    // Start hidden
             animate={{ opacity: 1, scale: 1 }}   // Appear smoothly
             exit={{ opacity: 0, scale: 0.8 }}    // Hide smoothly
             transition={{ duration: 0.3 }}       // Speed of animation
-            className="bg-white p-6 rounded-lg shadow-lg w-full  max-h-[90vh] overflow-y-auto">
+            className=" rounded-lg  w-full">
             <div className="flex justify-between items-center">
                 <h2 className="text-2xl font-bold text-gray-700 mb-4 mt-3 text-center">Fill the Form</h2>
-                <button onClick={close} className="text-red-500 text-lg font-semibold cursor-pointer">close</button>
+                <button onClick={()=> handleClose(close)} className="text-red-500 text-lg font-semibold cursor-pointer">close</button>
             </div>
 
             {/* Form */}

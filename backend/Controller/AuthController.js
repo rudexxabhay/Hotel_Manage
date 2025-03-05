@@ -1,5 +1,5 @@
 import { v2 as cloudinary } from "cloudinary";
-import { UserModel, UserHotelModel } from '../Model/AuthModel.js'
+import { UserModel, UserHotelModel, BookingModel } from '../Model/AuthModel.js'
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import sendOtp from '../Config/Nodemailer.js'
@@ -131,17 +131,10 @@ res.cookie("token", token, {
    }
 }
 
-export const logout = async (req, res) => {
-   res.clearCookie("token", {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production", // HTTPS in production
-      sameSite: "None", // Required for cross-site cookies
-      path: "/", // Must match the path where cookie was set
-      domain: "hotel-management-iva4.onrender.com", // Ensure correct domain
-   });
-   res.json({ success: true, message: "Logged out successfully" });
+export const logout = async(req, res) => {
+   res.clearCookie("token");
+   res.json({ success: true, message: "Logout success" });
 };
-
 
 
 export const forgetPass = async (req, res) => {
@@ -250,9 +243,9 @@ export const createListing = async (req, res) => {
       capacity,
       availabeldates,
       contact } = req.body;
-   // if (!name || !location || !facility || !priceday || !capacity || !availabeldates || !contact) {
-   //    return res.json({ success: false, message: "All fields areee required" })
-   // }
+   if (!name || !location || !facility || !priceday || !capacity || !availabeldates || !contact) {
+      return res.json({ success: false, message: "All fields are required" })
+   }
 
    try {
       if (!req.file) return res.json({ error: "No file uploaded" });
@@ -380,3 +373,49 @@ export const delReview = async (req, res) => {
    }
  };
  
+export const booking = async (req,res) =>{
+   const {listId} = req.body;
+   if(!listId){
+      return res.json({success:false,message:"Please reload page then try again"})
+   }
+   try {
+      const user = await UserModel.findById(req.userId);
+      if(!user){
+         return res.json({success:false,message:"User not found"})
+      }
+
+      const hotel = await UserHotelModel.findById(listId);
+      if(!hotel){
+         return res.json({success:false,message:"Hotel not found"})
+      }
+   
+      const existingBooking = await BookingModel.findOne({ listing: listId, user: req.userId });
+
+      if (existingBooking) {
+        return res.json({ success: false, message: "You have already booked this hotel" });
+      }
+
+       const booking = new BookingModel({
+         listing: listId,
+         user: req.userId
+       })
+       await booking.save();
+       res.json({success : true, message: "Booking request sent"})
+   } catch (error) {
+      res.json({success:false,message:error.message})
+   }
+}
+
+export const Showbooking = async(req,res)=>{
+   try {
+      const booking = await BookingModel.find({user:req.userId}).populate("listing");
+      if(!booking){
+         return res.json({success:false,message:"No booking found"})
+      }
+      console.log("POP", booking)
+      res.json({success: true, message: "Booking found", booking})
+   } catch (error) {
+      res.json({success:false,message:error.message})
+   }
+}
+

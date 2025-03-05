@@ -4,7 +4,6 @@ import { toast } from "react-toastify";
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 import axios from "axios";
 const Rating = ({listingId,setItem}) => {
-  console.log("Tihs is lid", listingId)
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
   const [loding, setLoding] = useState(false)

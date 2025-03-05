@@ -32,13 +32,13 @@ function Navbar() {
     };
 
     checkAuth();
-  }, []);
+  }, [isLoggedIn]);
 
   const handleLogout = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(`${BASE_URL}/user/logout`, {
-        withCredentials: true, // ✅ Correct placement
+      const response = await axios.post(`${BASE_URL}/user/logout`,{}, {
+        withCredentials: true,
       });
 
       if (response.data.success) {
@@ -80,7 +80,7 @@ function Navbar() {
           } lg:flex lg:items-center lg:justify-center lg:w-auto transition-all `}
         >
           <div className=" flex flex-col lg:flex-row lg:items-center gap-4 p-4 md:p-0">
-            {["/", "/contact", "/my-booking", "/dashboard"].map((path, index) => (
+            {["/", "/contact", "/my-booking", "/dashboard", "/admin"].map((path, index) => (
               <Link
                 key={index}
                 to={path}
@@ -93,9 +93,9 @@ function Navbar() {
               </Link>
             ))}
           </div>
-          <div>
+          <div className="lg:hidden">
           {isLoggedIn ? (
-            <button onClick={() => navigate("/register")} className="border border-gray-300 rounded-lg px-5 py-1 hover:bg-gray-100 transition-all">
+            <button onClick={() => navigate("/register")} className=" border border-gray-300 rounded-lg px-5 py-1 hover:bg-gray-100 transition-all">
             Sign Out
           </button>
           ) : (

@@ -6,7 +6,7 @@ import axios from "axios";
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 import { useEffect, useState } from "react";
 function Review({listingId, item}) {
-  console.log("Tihs is lid", item)
+  
     const maxStars = 5;
     const [review, setReview] = useState([])
     const handleRemove = async(itemId)=>{
@@ -35,7 +35,6 @@ function Review({listingId, item}) {
       }
     }
     fetchReview();
-    console.log("Success")
   }, [item])
 
   
