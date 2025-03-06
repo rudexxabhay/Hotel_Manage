@@ -47,17 +47,26 @@ function Listings({item}) {
           {items.length === 0 ? (
              <div className='text-3xl text-center font-semibold my-5'> No listing</div>
           ) : (
-      items.map((item) => (
-      <div key={item._id} className="shadow-lg mx-4 my-2 border p-5 border-gray-300 hover:bg-slate-100 transition-all rounded-lg">
-       <h2 className="text-2xl text-grad font-semibold text-center">{item.name}</h2>
-      <img src={item.image} alt="img" className="w-full h-40 object-cover py-3 rounded-lg" />
-     <p className="text-gray-700">Price Per Day- {item.priceday}</p>
-       <p className="text-gray-700 max-md: my-2">Location- {item.location}</p>
-    <button onClick={()=> navigate(`/listing/${item._id}`)} className="border-gray-500 p-2 bg-blue-400 w-full cursor-pointer">See Details</button>
-    </div>
-     ))
-          )}
-          
+            items.map((item) => (
+              <div 
+                key={item._id} 
+                className="bg-gradient-to-r from-purple-300 via-pink-300 to-red-300 p-[1px] rounded-lg mx-4 my-2"
+              >
+                <div className="shadow-lg hover:bg-gradient-to-r from-purple-50 via-pink-50 to-red-50 transition-all bg-white rounded-lg p-4">
+                  <h2 className="text-2xl font-semibold text-center">{item.name}</h2>
+                  <img src={item.image} alt="img" className="w-full h-[40vh] object-cover py-3 rounded-lg" />
+                  <p className="text-gray-700">Price Per Day - {item.priceday}</p>
+                  <p className="text-gray-700 my-2">Location - {item.location}</p>
+                  <button 
+                    onClick={() => navigate(`/listing/${item._id}`)} 
+                    className="border-gray-500 p-2 bg-pink-400 hover:bg-pink-500 w-full cursor-pointer"
+                  >
+                    See Details
+                  </button>
+                </div>
+              </div>
+            ))
+          )}            
         </div>
       )}
     </div>

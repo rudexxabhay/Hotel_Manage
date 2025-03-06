@@ -69,25 +69,25 @@ console.log("YE hai",requestedHotels)
  
   return (
     <>
-      <div className="mx-3 p-2 mb-3 md:max-w-7xl md:mx-auto min-h-screen
+      <div className=" my-3 mx-3  mb-3 md:max-w-7xl md:mx-auto min-h-screen
       md:p-5 md:py-5 items-center border bg-slate-50 border-gray-300 md:m-5 rounded-lg shadow-lg">
         <div className="flex justify-between items-center">
           <button
             onClick={() => navigate(-1)}
             className="px-4 py-2  "
           >
-           <FontAwesomeIcon icon={faArrowLeft} className="text-lg"/>
+           <FontAwesomeIcon icon={faArrowLeft} className="text-sm text-gray-500"/> <span className="text-gray-500">Back</span>
           </button>
          </div>
-            <h1 className="text-3xl font-bold text-gray-800 mb-5 text-center">Detail About
-            <span className="text-3xl font-bold  mb-5 text-pink-400"> {listing.name} </span></h1>
+            <h1 className="text-lg md:text-3xl font-bold text-gray-800 mb-5 text-center">Detail About
+            <span className=" text-lg md:text-3xl font-bold  mb-5 text-pink-400"> {listing.name} </span></h1>
 
         <div className="">
           {listing && (
             <div key={listing._id} className="bg-slate-50">
               <img src={listing.image} alt={listing.name} className="w-full
-               h-[60vh] object-cover rounded-lg p-4" />
-              <div className="p-5">
+               object-cover rounded-lg p-4" />
+              <div className="px-4">
                 <h2 className="text-xl font-semibold text-gray-900">{listing.name}</h2>
                 <p className="text-gray-700">Available Date - {listing.availabeldates}</p>
                 <p className="text-gray-700">Capacity - {listing.capacity}</p>
@@ -97,7 +97,7 @@ console.log("YE hai",requestedHotels)
                 <p className="text-gray-700">Rating - {listing.rating}</p>
                 <p className="text-gray-700">Contact - {listing.contact}</p>
                 <button onClick={()=> handleBooking(listing._id)} disabled={requestedHotels[listing._id]}
-                 className="mt-4 w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition">
+                 className="mt-4 w-full bg-pink-400 text-white py-2 rounded-lg hover:bg-pink-500 transition">
                {requestedHotels[listing._id] ? "Requested" : "Book"}
                 </button>
               </div>

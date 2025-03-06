@@ -57,7 +57,7 @@ const Rating = ({listingId,setItem}) => {
 
       <button
         onClick={handleSubmit}
-        className="mt-4 bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
+        className="mt-4 bg-pink-500 text-white py-2 px-4 rounded-md hover:bg-pink-600"
       >
         {loding ? 
         ( <svg className="inline w-4 h-4 animate-spin fill-pink-300" viewBox="0 0 100 101" xmlns="http://www.w3.org/2000/svg">

@@ -429,3 +429,15 @@ export const Showbooking = async(req,res)=>{
    }
 }
 
+
+export const myListing = async(req,res)=>{
+   try {
+      const listing = await UserHotelModel.find({userId:req.userId});
+      if(!listing){
+         return res.json({success:false,message:"No listing found"})
+      }
+      res.json({success:true,message:"Listing found",listing})
+   } catch (error) {
+      res.json({success:false,message:error.message})
+   }
+}

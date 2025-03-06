@@ -3,7 +3,8 @@ import {
     register, addReview, delReview,
     showReview, allListing, listing, isOwner,
     AuthUsers, createListing, verifyOtp, logout, forgetPass, 
-    verifyForgetPass, resetPass, login, booking,Showbooking
+    verifyForgetPass, resetPass, login, booking,Showbooking,
+    myListing
 } from '../Controller/AuthController.js';
 import { AuthUser } from '../Middleware/AuthMiddleware.js';
 import { UserIDMiddleware } from '../Middleware/UserIDMiddleware.js'
@@ -28,3 +29,4 @@ authRouter.get("/:id/show-review", showReview);
 authRouter.delete("/:hotelId/review/:reviewId", delReview); 
 authRouter.post("/booking", UserIDMiddleware, booking);
 authRouter.post("/show-booking", UserIDMiddleware, Showbooking);
+authRouter.get("/my-listing", UserIDMiddleware, myListing);
