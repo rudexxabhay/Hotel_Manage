@@ -39,7 +39,7 @@ const Rating = ({listingId,setItem}) => {
             onClick={() => setRating(star)}
 
             className={`cursor-pointer text-3xl  ${
-              star <= rating ? "text-yellow-500" : "text-gray-400"
+              star <= rating ? "text-pink-500" : "text-gray-400"
             }`}
           >
             ★

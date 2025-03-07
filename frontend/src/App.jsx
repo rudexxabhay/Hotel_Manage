@@ -1,6 +1,6 @@
 import Navbar from "./Navbar";
 import { Routes, Route } from "react-router-dom";
-import { useEffect ,Suspense, lazy } from "react";
+import { useEffect  } from "react";
 import Register from "./Auth/Register";
 import HomePage from "./Dashboard/HomePage";
 import OtpVerify from "./Auth/OtpVerify";
@@ -14,6 +14,7 @@ import ProtectedRoute from "./ProtectedRoute";
 import Footer from "./Footer";
 import Booking from "./Dashboard/Booking";
 import Admin from "./Dashboard/Admin";
+import Contact from "./Dashboard/Contact";
 
 function App() {
   useEffect(() => {
@@ -45,6 +46,7 @@ function App() {
           <Route path="/dashboard" element={<ProtectedRoute><HomePage /></ProtectedRoute>} />
           <Route path="/listing/:id" element={<ProtectedRoute><ListingPage /></ProtectedRoute>} />
           <Route path="/my-booking" element={<ProtectedRoute><Booking/></ProtectedRoute>} />
+          <Route path="/contact" element={<Contact/>} />
           <Route path="/admin" element={<Admin/>} />
         </Routes>
       

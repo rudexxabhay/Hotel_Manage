@@ -7,7 +7,7 @@ import axios from 'axios'
 import { toast } from 'react-toastify'
 function HomePage() {
   const [loding, setLoding] = useState(false);
-   
+  const [search, setSearch] = useState()
   
     const handleClick = async() =>{
       setLoding(true)
@@ -29,8 +29,8 @@ function HomePage() {
   
   return (
     <>
-    <Home handleClick={handleClick} loding={loding}/>
-    <Listings/>
+    <Home handleClick={handleClick} loding={loding} searchItems={setSearch}/>
+    <Listings search={search}/>
     </>
   )
 }

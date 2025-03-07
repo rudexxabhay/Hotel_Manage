@@ -4,7 +4,7 @@ import {
     showReview, allListing, listing, isOwner,
     AuthUsers, createListing, verifyOtp, logout, forgetPass, 
     verifyForgetPass, resetPass, login, booking,Showbooking,
-    myListing
+    myListing, delListing,myRequest
 } from '../Controller/AuthController.js';
 import { AuthUser } from '../Middleware/AuthMiddleware.js';
 import { UserIDMiddleware } from '../Middleware/UserIDMiddleware.js'
@@ -30,3 +30,6 @@ authRouter.delete("/:hotelId/review/:reviewId", delReview);
 authRouter.post("/booking", UserIDMiddleware, booking);
 authRouter.post("/show-booking", UserIDMiddleware, Showbooking);
 authRouter.get("/my-listing", UserIDMiddleware, myListing);
+authRouter.delete("/del-listing/:id", UserIDMiddleware, delListing);
+authRouter.patch("/update-listing", UserIDMiddleware, myListing);
+authRouter.get("/request", UserIDMiddleware, myRequest);

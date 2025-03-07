@@ -49,7 +49,7 @@ function Review({listingId, item}) {
         <div className="flex justify-between items-center cursor-pointer">
         <h2>{item.name}</h2>
         <FontAwesomeIcon onClick={()=> handleRemove(item._id)} icon={faTrash} className="text-slate-500"/></div>
-        <div className="flex text-yellow-500 text-xl">
+        <div className="flex text-pink-500 text-xl">
         {[...Array(maxStars)].map((_, index) => (
         <span key={index}>
           {index < item.rating ? "★" : "☆"} {/* Filled or empty star */}

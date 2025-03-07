@@ -83,7 +83,7 @@ function Modal({handleClose}) {
                     <label className="font-medium text-gray-600">Name</label>
                     <input 
                         type="text"
-                        className="border w-full border-gray-300 rounded p-2"
+                        className="border w-full border-gray-300 rounded p-2 focus:outline-none focus:ring-1 focus:ring-pink-300"
                         placeholder="Enter name"
                         value={form.name}
                         onChange={(e)=> dispatch({type: "NAME", payload: e.target.value})}
@@ -97,7 +97,7 @@ function Modal({handleClose}) {
                     <input
                         type="text"
                         value={form.location}
-                        className="border w-full border-gray-300 rounded p-2"
+                        className=" focus:outline-none focus:ring-1 focus:ring-pink-300 border w-full border-gray-300 rounded p-2"
                         placeholder="Enter your location"
                         onChange={(e)=> dispatch({type: "LOCATION", payload: e.target.value})}
                         required
@@ -109,19 +109,19 @@ function Modal({handleClose}) {
                     <input
                         type="text"
                         value={form.facility}
-                        className="border w-full border-gray-300 rounded p-2"
+                        className="focus:outline-none focus:ring-1 focus:ring-pink-300 border w-full border-gray-300 rounded p-2"
                         placeholder="Enter facilities"
                         onChange={(e)=> dispatch({type: "FACILITY", payload: e.target.value})}
                         required
                     />
                 </div>
 
-                <div className=" flex items-center gap-2">
+                <div className="focus:outline-none focus:ring-1 focus:ring-pink-300 flex items-center gap-2">
                     <label className="font-medium text-gray-600">Price Per Day</label>
                     <input
                         type="text"
                         value={form.priceday}
-                        className="border w-full border-gray-300 rounded p-2"
+                        className=" focus:outline-none focus:ring-1 focus:ring-pink-300 border w-full border-gray-300 rounded p-2"
                         placeholder="Enter price per day"
                         onChange={(e)=> dispatch({type: "PRICEDAY", payload: e.target.value})}
                         required
@@ -132,7 +132,7 @@ function Modal({handleClose}) {
                     <input
                         type="text"
                         value={form.capacity}
-                        className="border w-full border-gray-300 rounded p-2"
+                        className="focus:outline-none focus:ring-1 focus:ring-pink-300 border w-full border-gray-300 rounded p-2"
                         placeholder="Enter your space capacity"
                         onChange={(e)=> dispatch({type: "CAPACITY", payload: e.target.value})}
                         required
@@ -143,7 +143,7 @@ function Modal({handleClose}) {
                     <input
                         type="text"
                         value={form.availabeldates}
-                        className="border w-full border-gray-300 rounded p-2"
+                        className="focus:outline-none focus:ring-1 focus:ring-pink-300 border w-full border-gray-300 rounded p-2"
                         placeholder="Enter available dates"
                         onChange={(e)=> dispatch({type: "AVAILABELDATES", payload: e.target.value})}
                         required
@@ -155,7 +155,7 @@ function Modal({handleClose}) {
                     onChange={handleImg}
                         type="file"
                         
-                        className="border w-full border-gray-300 rounded p-2"
+                        className=" focus:outline-none focus:ring-1 focus:ring-pink-300 border w-full border-gray-300 rounded p-2"
                         placeholder="Upload an image"
                         required
                     />
@@ -165,7 +165,7 @@ function Modal({handleClose}) {
                     <input
                         type="number"
                         value={form.contact}
-                        className="border w-full border-gray-300 rounded p-2"
+                        className="focus:outline-none focus:ring-1 focus:ring-pink-300 border w-full border-gray-300 rounded p-2"
                         placeholder="Enter your name"
                         onChange={(e)=> dispatch({type: "CONTACT", payload: e.target.value})}
                         required

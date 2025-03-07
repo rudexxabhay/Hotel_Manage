@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useState } from "react";
 import {
   faHouse,
   faCircleUser,
@@ -17,10 +18,12 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 
-export default function Home() {
+export default function Home({searchItems}) {
+const [search, setSearch] = useState()
+searchItems(search)
 
-  return (
-    <div className="relative w-full overflow-hidden">
+      return (
+      <div className="relative w-full overflow-hidden">
       <div className=" bg-gray-900 p-4 md:max-w-7xl md:m-auto lg:rounded-lg lg:mt-[-4px] overflow-hidden">
         <div className=" relative flex gap-6 space-x-12 animate-scroll ">
           <a href="">
@@ -71,11 +74,13 @@ export default function Home() {
             <div className="relative flex items-center gap-2">
             <input
               type="text"
-              className="w-full border px-9 py-1  focus:outline-none focus:ring-2 focus:ring-blue-300"
-              placeholder="Search here..."
+              className="w-full border px-9 py-1 text-pink-700  focus:outline-none focus:ring-2 focus:ring-pink-300"
+              placeholder="Search by city, name"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
             />
             <button className="border border-gray-200 px-4 py-1
-             bg-slate-50 hover:bg-slate-100 shadow-lg">Search</button>
+             bg-pink-300 hover:bg-pink-400 transition-all shadow-lg">Search</button>
             </div>
             </div>
       </div>

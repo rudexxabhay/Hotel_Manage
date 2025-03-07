@@ -12,7 +12,7 @@ import { toast } from "react-toastify";
 
 const ListingPage = () => {
   const { id } = useParams();
-  const [listing, setListings] = useState([])
+  const [listing, setListings] = useState({})
   const [item, setItem] = useState("")
 const [requestedHotels, setRequestedHotels] = useState({});
 console.log("YE hai",requestedHotels)
@@ -28,8 +28,10 @@ console.log("YE hai",requestedHotels)
   }, [id])
 
   const handleBooking = async(listId)=>{
+    console.log(listId)
     try {
       const response = await axios.post(`${BASE_URL}/user/booking`, {listId}, {withCredentials: true});
+      console.log(response)
       if(response.data.success){
         toast(response.data.message);
         setRequestedHotels((prev) => ({
@@ -54,9 +56,15 @@ console.log("YE hai",requestedHotels)
         console.log("USERBOOKING", userBookings)
         const bookingMap = {};
 
-        userBookings.map((booking) => {
-          bookingMap[booking.listing._id] = true; // Jo hotels booked hain unka tracking
+        userBookings.forEach((booking) => {
+          if (booking.listing && booking.listing._id) {
+            bookingMap[booking.listing._id] = true;
+          } else {
+            console.warn("Skipping booking with missing listing:", booking);
+          }
         });
+  
+
     console.log("BOOKINGMAP", bookingMap)
         setRequestedHotels(bookingMap);
       } catch (error) {
@@ -85,7 +93,7 @@ console.log("YE hai",requestedHotels)
         <div className="">
           {listing && (
             <div key={listing._id} className="bg-slate-50">
-              <img src={listing.image} alt={listing.name} className="w-full
+              <img src={listing.image} alt={listing.name} className="w-full h-[50vh] md:h-screen
                object-cover rounded-lg p-4" />
               <div className="px-4">
                 <h2 className="text-xl font-semibold text-gray-900">{listing.name}</h2>
@@ -97,7 +105,7 @@ console.log("YE hai",requestedHotels)
                 <p className="text-gray-700">Rating - {listing.rating}</p>
                 <p className="text-gray-700">Contact - {listing.contact}</p>
                 <button onClick={()=> handleBooking(listing._id)} disabled={requestedHotels[listing._id]}
-                 className="mt-4 w-full bg-pink-400 text-white py-2 rounded-lg hover:bg-pink-500 transition">
+                 className="mt-4 mb-2 w-full bg-pink-400 text-white py-2 rounded-lg hover:bg-pink-500 transition">
                {requestedHotels[listing._id] ? "Requested" : "Book"}
                 </button>
               </div>

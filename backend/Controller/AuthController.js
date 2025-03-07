@@ -60,17 +60,17 @@ export const login = async (req, res) => {
       }
 
       const token = jwt.sign(
-   { userId: user._id, email: user.email },
-   process.env.JWT_SECRET,
-   { expiresIn: "7d" }
-);
+         { userId: user._id, email: user.email },
+         process.env.JWT_SECRET,
+         { expiresIn: "7d" }
+      );
 
-res.cookie("token", token, {
-   httpOnly: true, // Security: Prevent JS Access
-   secure: true, // Ensure it's always secure (Required for `sameSite: "none"`)
-   sameSite: "none", // Required for cross-origin cookies
-   maxAge: 7 * 24 * 60 * 60 * 1000, // 7 Days
-});
+      res.cookie("token", token, {
+         httpOnly: true, // Security: Prevent JS Access
+         secure: true, // Ensure it's always secure (Required for `sameSite: "none"`)
+         sameSite: "none", // Required for cross-origin cookies
+         maxAge: 7 * 24 * 60 * 60 * 1000, // 7 Days
+      });
       res.json({ success: true, message: "Login success" })
    } catch (error) {
       res.json({ success: false, message: error.message });
@@ -113,17 +113,17 @@ export const verifyOtp = async (req, res) => {
       //Creating token
 
       const token = jwt.sign(
-   { userId: user._id, email: user.email },
-   process.env.JWT_SECRET,
-   { expiresIn: "7d" }
-);
+         { userId: user._id, email: user.email },
+         process.env.JWT_SECRET,
+         { expiresIn: "7d" }
+      );
 
-res.cookie("token", token, {
-   httpOnly: true, // Security: Prevent JS Access
-   secure: true, // Ensure it's always secure (Required for `sameSite: "none"`)
-   sameSite: "none", // Required for cross-origin cookies
-   maxAge: 7 * 24 * 60 * 60 * 1000, // 7 Days
-});
+      res.cookie("token", token, {
+         httpOnly: true, // Security: Prevent JS Access
+         secure: true, // Ensure it's always secure (Required for `sameSite: "none"`)
+         sameSite: "none", // Required for cross-origin cookies
+         maxAge: 7 * 24 * 60 * 60 * 1000, // 7 Days
+      });
 
       return res.json({ success: true, message: "User verified successfully" });
    } catch (error) {
@@ -134,7 +134,7 @@ res.cookie("token", token, {
 export const logout = async (req, res) => {
    console.log("Logout function called");
    console.log("Cookies before clearing:", req.cookies);
-   
+
    res.clearCookie("token", {
       httpOnly: true,
       secure: true,
@@ -381,63 +381,102 @@ export const delReview = async (req, res) => {
    } catch (error) {
       res.status(500).json({ success: false, message: error.message });
    }
- };
- 
-export const booking = async (req,res) =>{
-   const {listId} = req.body;
-   if(!listId){
-      return res.json({success:false,message:"Please reload page then try again"})
+};
+
+export const booking = async (req, res) => {
+   const { listId } = req.body;
+   if (!listId) {
+      return res.json({ success: false, message: "Please reload page then try again" })
    }
    try {
       const user = await UserModel.findById(req.userId);
-      if(!user){
-         return res.json({success:false,message:"User not found"})
+      if (!user) {
+         return res.json({ success: false, message: "User not found" })
       }
 
       const hotel = await UserHotelModel.findById(listId);
-      if(!hotel){
-         return res.json({success:false,message:"Hotel not found"})
+      if (!hotel) {
+         return res.json({ success: false, message: "Hotel not found" })
       }
-   
-      const existingBooking = await BookingModel.findOne({ listing: listId, user: req.userId });
+      console.log(hotel)
 
-      if (existingBooking) {
-        return res.json({ success: false, message: "You have already booked this hotel" });
-      }
+      // const existingBooking = await BookingModel.findOne({ listing: listId, user: req.userId });
 
-       const booking = new BookingModel({
+      // if (existingBooking) {
+      //    return res.json({ success: false, message: "You have already booked this hotel" });
+      // }
+
+      const booking = new BookingModel({
          listing: listId,
          user: req.userId
-       })
-       await booking.save();
-       res.json({success : true, message: "Booking request sent"})
+      })
+      await booking.save();
+      res.json({ success: true, message: "Booking request sent" })
    } catch (error) {
-      res.json({success:false,message:error.message})
+      res.json({ success: false, message: error.message })
    }
 }
 
-export const Showbooking = async(req,res)=>{
+export const Showbooking = async (req, res) => {
    try {
-      const booking = await BookingModel.find({user:req.userId}).populate("listing");
-      if(!booking){
-         return res.json({success:false,message:"No booking found"})
+      const booking = await BookingModel.find({ user: req.userId }).populate("listing");
+      if (!booking) {
+         return res.json({ success: false, message: "No booking found" })
       }
       console.log("POP", booking)
-      res.json({success: true, message: "Booking found", booking})
+      res.json({ success: true, message: "Booking found", booking })
    } catch (error) {
-      res.json({success:false,message:error.message})
+      res.json({ success: false, message: error.message })
+   }
+}
+
+export const myRequest = async (req, res) => {
+   try {
+      const ownerId = req.userId;
+      const listing = await UserHotelModel.find({ userId: ownerId });
+      const listId = listing.map((list) => list._id);
+      const requests = await BookingModel.find({ listing: { $in: listId } }).populate({
+         path: "listing", 
+         select: "name location", 
+      })
+         .populate({
+            path: "user", 
+            select: "name email", 
+         });
+      console.log(requests)
+      res.json({ success: true, message: "Request found", requests })
+   } catch (error) {
+      res.json({ success: false, message: error.message })
    }
 }
 
 
-export const myListing = async(req,res)=>{
+export const myListing = async (req, res) => {
    try {
-      const listing = await UserHotelModel.find({userId:req.userId});
-      if(!listing){
-         return res.json({success:false,message:"No listing found"})
+      const listing = await UserHotelModel.find({ userId: req.userId });
+      if (!listing) {
+         return res.json({ success: false, message: "No listing found" })
       }
-      res.json({success:true,message:"Listing found",listing})
+      res.json({ success: true, message: "Listing found", listing })
    } catch (error) {
-      res.json({success:false,message:error.message})
+      res.json({ success: false, message: error.message })
+   }
+}
+
+
+export const delListing = async (req, res) => {
+   const { id } = req.params
+   if (!id) {
+      return res.json({ success: false, message: "Please reload page then try again" })
+   }
+   try {
+      const listing = await UserHotelModel
+         .findByIdAndDelete(id);
+      if (!listing) {
+         return res.json({ success: false, message: "No listing found" })
+      }
+      res.json({ success: true, message: "Listing deleted" })
+   } catch (error) {
+      res.json({ success: false, message: error.message })
    }
 }
