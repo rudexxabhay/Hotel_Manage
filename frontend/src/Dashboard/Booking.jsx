@@ -50,12 +50,12 @@ function Booking() {
         <input
           type="text"
           placeholder="Search by name..."
-          className="p-2 border rounded-lg w-full md:w-1/3 mb-2 md:mb-0"
+          className="p-2 bg-transparent text-pink-700 border focus:ring focus:ring-pink-500 rounded-lg w-full md:w-1/3 mb-2 md:mb-0"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
         <select
-          className="p-2 border rounded-lg w-full md:w-1/4"
+          className="p-2 rounded-lg w-full md:w-1/4 focus:ring focus:ring-pink-300"
           value={statusFilter}
           onChange={(e) => setStatusFilter(e.target.value)}
         >
@@ -99,7 +99,10 @@ function Booking() {
                 </span>
 
                 <button
-                  className="px-4 py-2 text-sm font-semibold text-red-700 border border-red-500 rounded-lg hover:bg-red-500 hover:text-white transition"
+                  className={`px-4 py-2 text-sm font-semibold
+                     text-red-700 border border-red-500 rounded-lg
+                      hover:bg-red-500 ${booking.status === "approved" && "hidden"}
+                       hover:text-white transition ${booking.status === "rejected" && "hidden"}`}
                   onClick={() => setModal(booking._id)}
                 >
                   Cancel

@@ -40,7 +40,7 @@ const userHotelSchema = new mongoose.Schema({
 const BookingSchemam = new mongoose.Schema({
    listing: { type: mongoose.Schema.Types.ObjectId, ref: "UserHotel", required: true },
    user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-   status: { type: String, enum: ["pending", "approved", "cancelled"], default: "pending"},
+   status: { type: String, enum: ["pending", "approved", "rejected"], default: "pending"},
    createdAt: { type: Date, default: Date.now },
 })
 const BookingModel = mongoose.model("Booking", BookingSchemam);

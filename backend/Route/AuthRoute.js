@@ -4,7 +4,7 @@ import {
     showReview, allListing, listing, isOwner,
     AuthUsers, createListing, verifyOtp, logout, forgetPass, 
     verifyForgetPass, resetPass, login, booking,Showbooking,
-    myListing, delListing,myRequest
+    myListing, delListing,myRequest, approveReject
 } from '../Controller/AuthController.js';
 import { AuthUser } from '../Middleware/AuthMiddleware.js';
 import { UserIDMiddleware } from '../Middleware/UserIDMiddleware.js'
@@ -33,3 +33,4 @@ authRouter.get("/my-listing", UserIDMiddleware, myListing);
 authRouter.delete("/del-listing/:id", UserIDMiddleware, delListing);
 authRouter.patch("/update-listing", UserIDMiddleware, myListing);
 authRouter.get("/request", UserIDMiddleware, myRequest);
+authRouter.post("/approve", UserIDMiddleware, approveReject);

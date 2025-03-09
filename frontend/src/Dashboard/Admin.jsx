@@ -41,6 +41,7 @@ function Admin() {
     setActiveTab("requests")
     try {
       const response = await axios.get(`${BASE_URL}/user/request`, { withCredentials: true })
+      console.log(response.data.requests)
       setRequest(response.data.requests)
     } catch (error) {
       toast.error(error.message)
@@ -54,6 +55,16 @@ function Admin() {
       toast.error(error.message)
     }
 
+  }
+
+  const handleApprove = async(e, listingID)=>{
+    console.log(e.target.innerHTML, listingID)
+    try {
+      const response = await axios.post(`${BASE_URL}/user/approve`, {listingID, approve: e.target.innerHTML.toLowerCase()}, {withCredentials: true});
+      console.log(response)
+    } catch (error) {
+      toast.error(error.message)
+    }
   }
 
   
@@ -154,11 +165,13 @@ function Admin() {
             <p className="text-gray-500">Time: {new Date(req.createdAt).toLocaleString()}</p>
           </div>
           <div className="flex gap-2">
-            <button  className="border bg-green-400 text-white px-4 py-2 rounded-lg hover:bg-green-500 transition-all">
-              Accept
+            <button disabled={req.status === "approved"} onClick={(e)=> handleApprove(e, req._id)}  className={`border bg-green-400 text-white
+               px-4 py-2 rounded-lg hover:bg-green-500 transition-all ${req.status === "rejected" && "hidden"} `}>
+              {req.status === "approved" ? "Approved" : "accept"}  
             </button>
-            <button  className="border bg-red-400 text-white px-4 py-2 rounded-lg hover:bg-red-500 transition-all">
-              Reject
+            <button disabled={req.status === "rejected"} onClick={(e)=> handleApprove(e, req._id)} className={`border bg-red-400 text-white px-4 
+              py-2 rounded-lg hover:bg-red-500 transition-all ${req.status === "approved" && "hidden"} `}>
+              {req.status === "rejected" ? "Rejected" : "Cancle"}
             </button>
           </div>
         </div>

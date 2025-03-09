@@ -45,36 +45,34 @@ console.log("YE hai",requestedHotels)
   }
   useEffect(() => {
     const fetchBookings = async () => {
-      try {
-        const response = await axios.post(
-          `${BASE_URL}/user/show-booking`,
-          {},
-          { withCredentials: true }
-        );
+        try {
+            const response = await axios.post(
+                `${BASE_URL}/user/show-booking`,
+                {},
+                { withCredentials: true }
+            );
 
-        const userBookings = response.data.booking;
-        console.log("USERBOOKING", userBookings)
-        const bookingMap = {};
+            const userBookings = response.data.booking;
+            console.log("USERBOOKING", userBookings);
 
-        userBookings.forEach((booking) => {
-          if (booking.listing && booking.listing._id) {
-            bookingMap[booking.listing._id] = true;
-          } else {
-            console.warn("Skipping booking with missing listing:", booking);
-          }
-        });
-  
+            // Filter only pending bookings and create a map of their listing IDs
+            const bookingMap = {};
+            userBookings
+                .filter((booking) => booking.status === "pending" && booking.listing && booking.listing._id)
+                .forEach((booking) => {
+                    bookingMap[booking.listing._id] = true;
+                });
 
-    console.log("BOOKINGMAP", bookingMap)
-        setRequestedHotels(bookingMap);
-      } catch (error) {
-        console.error("Error fetching bookings:", error);
-      }
+            console.log("PENDING BOOKINGMAP", bookingMap);
+            setRequestedHotels(bookingMap);
+        } catch (error) {
+            console.error("Error fetching bookings:", error);
+        }
     };
 
     fetchBookings();
-  }, []);
- 
+}, []);
+
   return (
     <>
       <div className=" my-3 mx-3  mb-3 md:max-w-7xl md:mx-auto min-h-screen

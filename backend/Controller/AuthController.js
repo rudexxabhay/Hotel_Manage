@@ -480,3 +480,24 @@ export const delListing = async (req, res) => {
       res.json({ success: false, message: error.message })
    }
 }
+
+export const approveReject = async (req, res) => {
+   const { approve, listingID } = req.body;
+
+   try {
+      const booking = await BookingModel.findById(listingID);
+      if (!booking) {
+         return res.status(404).json({ success: false, message: "Booking not found" });
+      }
+
+      booking.status = approve === "accept" ? "approved" : "rejected";
+      await booking.save();
+
+      res.json({
+         success: true,
+         message: `Booking ${booking.status}`,
+      });
+   } catch (error) {
+      res.json({ success: false, message: error.message });
+   }
+};

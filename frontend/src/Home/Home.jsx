@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 function Home() {
   const navigate = useNavigate();
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen px-4">
+    <div className="flex flex-col items-center justify-center min-h-screen px-4 dark:bg-slate-800 dark:text-white">
       <div className="mt-12 md:min-h-[50vh] text-center">
         <h2 className="text-3xl md:text-5xl font-semibold">
           Make Your Special Day
@@ -11,15 +11,15 @@ function Home() {
         </h2>
 
         <div className="max-w-2xl mx-auto">
-          <p className="text-gray-700 mt-4">
-            At <span className="text-pink-400 font-medium">Grant - Hotel</span>, we turn your dream wedding into reality.
+          <p className="text-gray-700 mt-4 dark:text-white">
+            At <span className="text-pink-400 font-medium ">Grant - Hotel</span>, we turn your dream wedding into reality.
             With our elegant venue, top-notch facilities, and exceptional services, we ensure your big day is truly magical.
           </p>
-          <p className="text-gray-700 mt-4">
+          <p className="text-gray-700 mt-4 dark:text-white">
             We offer fully customizable decorations, delicious catering, and modern amenities to make your
             special day seamless. With ample parking and budget-friendly packages, we take care of every detail.
           </p>
-          <p className="text-gray-700 mt-4">
+          <p className="text-gray-700 mt-4 dark:text-white">
             Let us turn your dream wedding into reality. Book your date today and celebrate without worries!
           </p>
         </div>

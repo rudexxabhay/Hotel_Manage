@@ -15,6 +15,19 @@ function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
+  const [darkMode, setDarkMode] = useState(() => {
+    return localStorage.getItem("theme") === "dark";
+  });
+
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("theme", "dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("theme", "light");
+    }
+  }, [darkMode]);
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -51,7 +64,7 @@ function Navbar() {
   };
 
   return (
-    <nav className="sticky top-0 bg-white shadow-md z-20">
+    <nav className="sticky top-0 bg-white dark:bg-slate-800 dark:text-pink-500 shadow-md z-20">
       <div className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-blue-300 to-red-300"></div>
 
       <div className="px-4 flex items-center justify-between py-3 md:px-10">
@@ -78,7 +91,15 @@ function Navbar() {
             </Link>
           ))}
         </div>
-
+         <div>
+          <button
+      onClick={() => setDarkMode(!darkMode)}
+      className="p-2 rounded-lg bg-gray-300 dark:bg-gray-700 text-black dark:text-white"
+    >
+      {darkMode ? "🌙 Dark Mode" : "☀️ Light Mode"}
+    </button>
+         </div>
+          
         <div className="lg:flex items-center gap-4 hidden">
           {isLoggedIn ? (
             <div className="relative">
@@ -113,6 +134,7 @@ function Navbar() {
           />
           {userMenuOpen && (
             <div className="absolute right-4 mt-2 w-40 bg-white border rounded-lg shadow-md text-center">
+              
               {!isLoggedIn ? (
                 <button onClick={() => navigate("/register")} className="block w-full py-2 hover:bg-gray-100">
                   Login/Register
