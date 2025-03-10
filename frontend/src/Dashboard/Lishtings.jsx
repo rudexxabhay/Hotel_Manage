@@ -80,7 +80,7 @@ function Listings({ search }) {
                   </p>
                   <button
                     onClick={() => navigate(`/listing/${item._id}`)}
-                    className="mt-4 w-full bg-gradient-to-r from-pink-500 to-purple-500 hover:from-purple-500 hover:to-pink-500 text-white font-semibold py-2 rounded-lg shadow-md transition-all"
+                    className="mt-4 w-full bg-pink-500 hover:bg-pink-600 text-white font-semibold py-2  shadow-md transition-all"
                   >
                     View Details
                   </button>
