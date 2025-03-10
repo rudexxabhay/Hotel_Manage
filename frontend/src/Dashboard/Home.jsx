@@ -23,7 +23,7 @@ const [search, setSearch] = useState()
 searchItems(search)
 
       return (
-      <div className="relative w-full overflow-hidden">
+      <div className="relative w-full overflow-hidden dark:bg-slate-800">
       <div className=" bg-gray-900 p-4 md:max-w-7xl md:m-auto lg:rounded-lg lg:mt-[-4px] overflow-hidden">
         <div className=" relative flex gap-6 space-x-12 animate-scroll ">
           <a href="">
@@ -65,9 +65,9 @@ searchItems(search)
         </div>
       </div>
       {/* Main page */}
-      <div className="grid grid-cols-1 md:flex md:justify-between items-center lg:max-w-7xl m-auto">
+      <div className="dark:bg-slate-800 grid grid-cols-1 md:flex md:justify-between items-center lg:max-w-7xl m-auto">
         <div className="px-2 mt-2">
-          <p className="text-center text-2xl md:text-[20px] font-semibold">Our popular sets</p>
+          <p className="dark:text-pink-500 text-center text-2xl md:text-[20px] font-semibold">Our popular sets</p>
         </div>
 
             <div className="flex justify-center mt-3 px-3">
@@ -84,7 +84,8 @@ searchItems(search)
             </div>
             </div>
       </div>
-      <div className="h-[1px] w-7xl m-auto mb-5 border border-gray-700 mt-2"></div>
+      <div className="dark:bg-gradient-to-r from-blue-300 to-red-300
+       h-[2px] w-7xl m-auto mb-5  mt-2 bg-gradient-to-r from-blue-300 to-red-300"></div>
 
     </div>
   );

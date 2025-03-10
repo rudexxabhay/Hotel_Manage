@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {  faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
+import {  faBars, faTimes, faMoon, faSun  } from "@fortawesome/free-solid-svg-icons";
 import logo from "../src/assets/pink-blue-abstract-logo.png";
 import { toast } from "react-toastify";
 import axios from "axios";
@@ -75,9 +75,9 @@ function Navbar() {
           <FontAwesomeIcon icon={menuOpen ? faTimes : faBars} />
         </button>
 
-        <Link to="/" className="flex items-center gap-2">
-          <img src={logo} alt="Logo" className="w-[45px] md:w-[60px]" />
-          <span className="text-xl lg:text-2xl font-bold">Hotel Grand</span>
+        <Link to="/" className="flex items-center sm:gap-2">
+          <img src={logo} alt="Logo" className="w-[40px] md:w-[60px]" />
+          <span className="md:text-xl lg:text-2xl font-bold">Hotel Grand</span>
         </Link>
 
         <div className="hidden lg:flex gap-6">
@@ -85,7 +85,7 @@ function Navbar() {
             <Link
               key={index}
               to={path}
-              className={`px-4 py-2 ${location.pathname === path ? 'text-pink-500 font-semibold' : 'text-black'} hover:text-pink-500`}
+              className={`px-4 py-2 ${location.pathname === path ? 'text-pink-500 font-semibold' : 'text-black dark:text-white'} hover:text-pink-500`}
             >
               {path === '/' ? 'Home' : path.replace('/', '').replace('-', ' ')}
             </Link>
@@ -94,9 +94,9 @@ function Navbar() {
          <div>
           <button
       onClick={() => setDarkMode(!darkMode)}
-      className="p-2 rounded-lg bg-gray-300 dark:bg-gray-700 text-black dark:text-white"
+      className=" text-[20px]"
     >
-      {darkMode ? "🌙 Dark Mode" : "☀️ Light Mode"}
+      {darkMode ? <FontAwesomeIcon icon={faMoon} /> :<FontAwesomeIcon icon={faSun} />}
     </button>
          </div>
           
@@ -155,7 +155,7 @@ function Navbar() {
               key={index}
               to={path}
               onClick={() => setMenuOpen(false)}
-              className={`px-4 py-2 w-full ${location.pathname === path ? 'text-pink-500 font-semibold' : 'text-black'} hover:text-pink-500`}
+              className={`px-4 py-2 w-full ${location.pathname === path ? 'text-pink-500 font-semibold' : 'text-black dark:text-white'} hover:text-pink-500`}
             >
               {path === '/' ? 'Home' : path.replace('/', '').replace('-', ' ')}
             </Link>

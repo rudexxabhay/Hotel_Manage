@@ -41,18 +41,18 @@ function Listings({ search }) {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 py-10 px-4 md:px-8">
+    <div className=" min-h-screen  py-10 px-4 md:px-8 dark:bg-slate-800">
       {loading ? (
         <div className="flex justify-center items-center h-screen">
           <div className="w-16 h-16 border-4 border-pink-500 border-dashed rounded-full animate-spin"></div>
         </div>
       ) : (
-        <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:max-w-7xl mx-auto">
+        <div className=" grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:max-w-7xl mx-auto">
           {filteredItems.length === 0 ? (
-            <div className="text-3xl text-center font-semibold my-5">
+            <div className="text-3xl dark:text-pink-600 text-center font-semibold my-5">
               No Listings Found
             </div>
-          ) : (
+             ):(
             filteredItems.map((item) => (
               <div
                 key={item._id}
