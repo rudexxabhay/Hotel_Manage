@@ -15,6 +15,7 @@ import Footer from "./Footer";
 import Booking from "./Dashboard/Booking";
 import Admin from "./Dashboard/Admin";
 import Contact from "./Dashboard/Contact";
+import ChatUI from "./Dashboard/ChatUI";
 
 function App() {
   useEffect(() => {
@@ -47,6 +48,7 @@ function App() {
           <Route path="/listing/:id" element={<ProtectedRoute><ListingPage /></ProtectedRoute>} />
           <Route path="/my-booking" element={<ProtectedRoute><Booking/></ProtectedRoute>} />
           <Route path="/contact" element={<Contact/>} />
+          <Route path="/my-chats" element={<ChatUI/>} />
           <Route path="/admin" element={<Admin/>} />
         </Routes>
       
