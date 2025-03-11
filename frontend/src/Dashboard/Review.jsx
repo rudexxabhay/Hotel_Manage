@@ -40,15 +40,15 @@ function Review({listingId, item}) {
   
   return (
     <div className=" my-3 mx-3 p-2 md:max-w-7xl md:mx-auto 
-      md:p-5 md:py-5 items-center border bg-slate-50 border-gray-300 md:m-5 rounded-lg shadow-lg">
-      <h2 className="text-3xl font-bold text-gray-800 mb-5 text-center">All comments!</h2>
+      md:p-5 md:py-5 items-center dark:bg-slate-700 bg-slate-50  md:m-5 rounded-lg shadow-lg">
+      <h2 className="text-3xl font-bold text-gray-800 mb-5 text-center dark:text-white">All comments!</h2>
       <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
       
       {review.map((item)=>(
-        <div key={item._id} className="border border-gray-200 bg-white shodow-lg rounded-lg p-3"> 
+        <div key={item._id} className="dark:bg-slate-600 bg-white border border-gray-302000 shodow-lg rounded-lg p-3"> 
         <div className="flex justify-between items-center cursor-pointer">
-        <h2>{item.name}</h2>
-        <FontAwesomeIcon onClick={()=> handleRemove(item._id)} icon={faTrash} className="text-slate-500"/></div>
+        <h2 className="dark:text-white">{item.name}</h2>
+        <FontAwesomeIcon onClick={()=> handleRemove(item._id)} icon={faTrash} className="dark:text-white text-slate-500"/></div>
         <div className="flex text-pink-500 text-xl">
         {[...Array(maxStars)].map((_, index) => (
         <span key={index}>
@@ -56,7 +56,7 @@ function Review({listingId, item}) {
         </span>
       ))}
     </div>
-     <p className="text-gray-500">{item.review}</p>
+     <p className="dark:text-white text-gray-500">{item.review}</p>
      <p className="text-blue-500 text-[12px] md:text-[13px] ">Created At: {new Date(item.createdAt).toLocaleString("en-IN", {
        year: "numeric",
        month: "short",

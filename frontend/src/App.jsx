@@ -23,7 +23,7 @@ function App() {
 
 
   return (
-    <>
+    <div className="dark:bg-slate-800">
       <AuthProvider>
         <Navbar />
         
@@ -53,7 +53,7 @@ function App() {
       </AuthProvider>
 
       <Footer />
-    </>
+    </div>
   );
 }
 

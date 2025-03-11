@@ -29,8 +29,8 @@ const Rating = ({listingId,setItem}) => {
   } 
   return (
     <div className="mx-3 p-2 md:max-w-7xl md:mx-auto 
-      md:p-5 md:py-5 items-center border bg-slate-50 border-gray-300 md:m-5 rounded-lg shadow-lg">
-      <h2 className="text-xl font-semibold">Leave a Review</h2>
+      md:p-5 md:py-5 items-center  bg-slate-50 dark:bg-slate-700 md:m-5 rounded-lg shadow-lg">
+      <h2 className="dark:text-white text-xl font-semibold">Leave a Review</h2>
 
       <div className="flex gap-2 mt-3">
         {[1, 2, 3, 4, 5].map((star) => (
@@ -47,12 +47,12 @@ const Rating = ({listingId,setItem}) => {
         ))}
       </div>
 
-      <label className="block mt-3">Your Review:</label>
+      <label className="dark:text-white block mt-3">Your Review:</label>
       <textarea
         value={comment}
         placeholder="Enter your reviews..."
         onChange={(e) => setComment(e.target.value)}
-        className="w-full p-2 border rounded-md bg-white"
+        className="w-full p-2  rounded-md dark:bg-slate-600 bg-white"
       ></textarea>
 
       <button

@@ -39,6 +39,7 @@ function Listings({ search }) {
       item?.name?.toLowerCase().includes(search?.toLowerCase() || "") ||
       item?.location?.toLowerCase().includes(search?.toLowerCase() || "")
   );
+  const unreadMessages = 6;
 
   return (
     <div className=" min-h-screen  py-10 px-4 md:px-8 dark:bg-slate-800">
@@ -56,7 +57,7 @@ function Listings({ search }) {
             filteredItems.map((item) => (
               <div
                 key={item._id}
-                className="relative group rounded-xl shadow-lg overflow-hidden transition-all duration-300 transform hover:scale-105 bg-white/60 backdrop-blur-md border border-gray-200 p-4"
+                className="relative group rounded-xl shadow-lg overflow-hidden transition-all duration-300 transform hover:scale-105 bg-white/60 dark:bg-slate-600 dark:text-pink-600 backdrop-blur-md border border-gray-200 p-4"
               >
                 <div className="relative overflow-hidden rounded-lg">
                   <img
@@ -72,10 +73,10 @@ function Listings({ search }) {
                 </div>
 
                 <div className="p-4">
-                  <h2 className="text-2xl font-bold text-gray-800 group-hover:text-pink-500 transition-all">
+                  <h2 className="dark:text-pink-300 text-2xl font-bold text-gray-800 group-hover:text-pink-500 transition-all">
                     {item.name}
                   </h2>
-                  <p className="text-gray-600 mt-1 flex items-center gap-2">
+                  <p className="text-gray-600 mt-1 flex items-center gap-2 dark:text-white">
                     📍 {item.location}
                   </p>
                   <button
@@ -85,11 +86,26 @@ function Listings({ search }) {
                     View Details
                   </button>
                 </div>
+                
               </div>
             ))
           )}
         </div>
       )}
+      <div className="fixed bottom-6 right-6 z-50">
+      <button 
+        onClick={() => navigate("/my-chats")} 
+        className="relative flex items-center justify-center w-12 h-12 md:w-14 md:h-14
+         bg-pink-500 text-white rounded-full shadow-lg hover:bg-pink-600 transition duration-300"
+      >
+        💬
+        {unreadMessages > 0 && (
+          <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full">
+            {unreadMessages}
+          </span>
+        )}
+      </button>
+    </div>
     </div>
   );
 }
