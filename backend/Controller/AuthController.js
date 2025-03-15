@@ -1,5 +1,5 @@
 import { v2 as cloudinary } from "cloudinary";
-import { UserModel, UserHotelModel, BookingModel } from '../Model/AuthModel.js'
+import { UserModel, UserHotelModel, BookingModel, ChatModel } from '../Model/AuthModel.js'
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import sendOtp from '../Config/Nodemailer.js'
@@ -238,7 +238,8 @@ export const resetPass = async (req, res) => {
 };
 
 export const AuthUsers = async (req, res) => {
-   res.json({ success: true, isLogin: true })
+   const id = req.userId
+   res.json({ success: true, isLogin: true, id })
 }
 
 export const isOwner = async (req, res) => {
@@ -501,3 +502,118 @@ export const approveReject = async (req, res) => {
       res.json({ success: false, message: error.message });
    }
 };
+
+export const chatStart = async (req, res) => {
+   try {
+      const { ownerId } = req.body;
+      const userId = req.userId;
+
+      if (!ownerId) {
+         return res.status(400).json({ success: false, message: "Owner ID is required" });
+      }
+
+      // पहले से मौजूद चैट खोजो
+      let chat = await ChatModel.findOne({
+         users: { $all: [userId, ownerId] }
+      });
+
+      if (!chat) {
+         // नई चैट बनाओ अगर नहीं मिली
+         chat = new ChatModel({
+            users: [userId, ownerId],
+            messages: []
+         });
+         await chat.save();
+      }
+
+      // ✅ Proper Response भेजो
+      return res.json({ success: true, message: "Chat found or created", chatId: chat._id });
+
+   } catch (error) {
+      console.error("Chat Start Error:", error);
+      return res.status(500).json({ success: false, message: "Internal Server Error" });
+   }
+};
+
+export const sendChat = async (req,res)=>{
+
+   try {
+      const { chatId, message } = req.body
+      const senderId = req.userId; // Logged-in User ID
+
+      if (!chatId || !message) {
+         return res.json({ error: "Chat ID and message are required" });
+     }
+     let chat = await ChatModel.findById(chatId);
+        if (!chat) {
+            return res.json({ error: "Chat not found" });
+        }
+
+        chat.message.push({
+         sender: senderId,
+         message: message,
+         timestamp: new Date()
+     });
+     await chat.save();
+     res.json({ success: true, message: "Message sent successfully" });
+
+   } catch (error) {
+      res.json({success: false, message: error.message})
+   }
+}
+
+export const chatHistory = async (req,res)=>{
+   try {
+      const userId = req.user.id; // Logged-in User ID
+
+      // 🔍 Find all chats where the user is involved
+      const chats = await ChatModel.find({ users: userId })
+          .populate("users", "name email") // Populate users' names & emails
+          .sort({ updatedAt: -1 }); // Latest chats first
+
+      res.json(chats);
+
+  } catch (error) {
+      console.error(error);
+      res.json({ error: "Internal Server Error" });
+  }
+}
+
+export const allChats = async(req,res)=>{
+   try {
+      const allChats = await ChatModel.find({users: req.userId}).populate("users", "name email")
+      console.log("AllChats",allChats)
+      res.json({success:true, allChats})
+   } catch (error) {
+      res.json({ error: "Internal Server Error" });
+   }
+}
+
+export const showChats = async (req, res) => {
+   const { id } = req.params;
+   try {
+      const chats = await ChatModel.findById(id)
+         .populate("users", "name email")  // ✅ Users के नाम और email लाने के लिए
+         .populate({
+            path: "message",
+            populate: {
+               path: "sender", // ✅ Messages के sender को भी populate करो
+               select: "name email"
+            }
+         });
+
+      // अगर कोई chat नहीं मिली, तो 404 error return करो
+      if (!chats) {
+         return res.status(404).json({ error: "Chat not found" });
+      }
+
+      console.log(chats); // Debugging Purpose
+
+      // ✅ Proper response send करो
+      res.json(chats);
+   } catch (error) {
+      console.error("Error fetching chat:", error);
+      res.status(500).json({ error: "Internal Server Error" });
+   }
+};
+

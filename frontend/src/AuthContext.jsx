@@ -8,6 +8,7 @@ export const AuthContext = createContext();
 // eslint-disable-next-line react/prop-types
 export const AuthProvider = ({ children }) => {
   const [isAuth, setIsAuth] = useState(null);
+  const [loginId, setloginId] = useState(null)
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -19,6 +20,7 @@ export const AuthProvider = ({ children }) => {
         );
 
         if (response.data.success) {
+          setloginId(response.data.id)
           setIsAuth(true);
         } else {
           setIsAuth(false);
@@ -33,7 +35,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ isAuth,setIsAuth }}>
+    <AuthContext.Provider value={{ isAuth,setIsAuth, loginId }}>
       {children}
     </AuthContext.Provider>
   );

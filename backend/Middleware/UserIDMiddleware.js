@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 export const UserIDMiddleware = (req, res, next) => {
     try {
         const token = req.cookies.token;
-        if (!token) return res.json({ message: "Unauthorize" });
+        if (!token) return res.json({ message: "Unauthorizeeee" });
 
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
        console.log(decoded)

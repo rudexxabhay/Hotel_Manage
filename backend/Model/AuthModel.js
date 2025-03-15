@@ -37,13 +37,28 @@ const userHotelSchema = new mongoose.Schema({
    }
 });
 
-const BookingSchemam = new mongoose.Schema({
+const BookingSchema = new mongoose.Schema({
    listing: { type: mongoose.Schema.Types.ObjectId, ref: "UserHotel", required: true },
    user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
    status: { type: String, enum: ["pending", "approved", "rejected"], default: "pending"},
    createdAt: { type: Date, default: Date.now },
 })
-const BookingModel = mongoose.model("Booking", BookingSchemam);
+
+const ChatSchema = new mongoose.Schema({
+   users: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+   message: [
+   {
+      sender: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+      message: { type: String },
+      createdAt: { type: Date, default: Date.now }
+   }
+   ]
+}, { timestamps: true })
+
+
+const ChatModel = mongoose.model("Chat", ChatSchema);
+
+const BookingModel = mongoose.model("Booking", BookingSchema);
 const UserHotelModel = mongoose.model("UserHotel", userHotelSchema);
 
-export { UserModel, UserHotelModel,BookingModel };
+export  { UserModel, UserHotelModel,BookingModel, ChatModel };

@@ -7,6 +7,7 @@ export const AuthUser = (req, res, next) => {
       return res.json({ success: false, message: "You'r are already logout" });
     }
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    console.log("Decodeddd", decoded)
     req.user = decoded; 
     next(); 
   } catch (error) {

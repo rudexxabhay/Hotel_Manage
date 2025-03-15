@@ -1,4 +1,4 @@
-import { useEffect, useState, } from "react";
+import { useEffect, useState} from "react";
 import Rating from "./Rating";
 import axios from "axios";
 const BASE_URL = import.meta.env.VITE_BASE_URL;
@@ -11,11 +11,13 @@ import { toast } from "react-toastify";
 
 
 const ListingPage = () => {
+  
   const { id } = useParams();
   const [listing, setListings] = useState({})
+  
   const [item, setItem] = useState("")
 const [requestedHotels, setRequestedHotels] = useState({});
-console.log("YE hai",requestedHotels)
+
   const navigate = useNavigate();
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -31,7 +33,6 @@ console.log("YE hai",requestedHotels)
     console.log(listId)
     try {
       const response = await axios.post(`${BASE_URL}/user/booking`, {listId}, {withCredentials: true});
-      console.log(response)
       if(response.data.success){
         toast(response.data.message);
         setRequestedHotels((prev) => ({
@@ -53,7 +54,7 @@ console.log("YE hai",requestedHotels)
             );
 
             const userBookings = response.data.booking;
-            console.log("USERBOOKING", userBookings);
+           ;
 
             // Filter only pending bookings and create a map of their listing IDs
             const bookingMap = {};
@@ -63,7 +64,7 @@ console.log("YE hai",requestedHotels)
                     bookingMap[booking.listing._id] = true;
                 });
 
-            console.log("PENDING BOOKINGMAP", bookingMap);
+            
             setRequestedHotels(bookingMap);
         } catch (error) {
             console.error("Error fetching bookings:", error);
@@ -72,6 +73,30 @@ console.log("YE hai",requestedHotels)
 
     fetchBookings();
 }, []);
+
+
+const handlerChatOwner = async (userId) => {
+  console.log("Owner ID:", userId); // Debugging ke liye
+
+  try {
+    const response = await axios.post(
+      `${BASE_URL}/user/start`,
+      { ownerId: userId }, // Data Send Karna
+      { withCredentials: true }
+    );
+
+    console.log("Response:", response.data.chatId); // Debugging ke liye
+
+    if ( response.data.chatId) {
+      navigate(`/my-chats/${response.data.chatId}`); // Navigate to chat
+    } else {
+      toast.error("Failed to start chat!");
+    }
+  } catch (error) {
+    console.error("Error starting chat:", error);
+    toast.error(error.response?.data?.message || "Something went wrong!");
+  }
+};
 
   return (
     <>
@@ -102,10 +127,16 @@ console.log("YE hai",requestedHotels)
                 <p className="text-gray-700 dark:text-white">Location - {listing.location}</p>
                 <p className="text-gray-700 dark:text-white">Rating - {listing.rating}</p>
                 <p className="text-gray-700 dark:text-white">Contact - {listing.contact}</p>
+                <div className="flex flex-col md:flex-row">
                 <button onClick={()=> handleBooking(listing._id)} disabled={requestedHotels[listing._id]}
-                 className="mt-4 mb-2 w-full bg-pink-400 text-white py-2 rounded-lg hover:bg-pink-500 transition">
-               {requestedHotels[listing._id] ? "Requested" : "Book"}
+                 className="mt-4 w-full bg-pink-400 text-white py-2 rounded-lg hover:bg-pink-500 transition">
+                  {requestedHotels[listing._id] ? "Requested" : "Book"}
                 </button>
+                <button onClick={()=> handlerChatOwner(listing.userId)}
+                 className="mt-4 w-full bg-pink-400 text-white py-2 rounded-lg hover:bg-pink-500 transition ml-2">
+                  Chat owner
+                </button>
+                </div>
               </div>
             </div>
           )}
