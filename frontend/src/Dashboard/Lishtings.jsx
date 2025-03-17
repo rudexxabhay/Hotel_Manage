@@ -11,7 +11,12 @@ function Listings({ search }) {
   const [items, setItems] = useState([]);
   const navigate = useNavigate();
 
+
   useEffect(() => {
+   
+   
+
+
     const fetchData = async () => {
       setLoading(true);
       try {
@@ -30,8 +35,10 @@ function Listings({ search }) {
         setLoading(false);
       }
     };
-
+    
     fetchData();
+   
+
   }, []);
 
   const filteredItems = items.filter(

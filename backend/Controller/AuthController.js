@@ -71,7 +71,7 @@ export const login = async (req, res) => {
          sameSite: "none", // Required for cross-origin cookies
          maxAge: 7 * 24 * 60 * 60 * 1000, // 7 Days
       });
-      res.json({ success: true, message: "Login success" })
+      res.json({ success: true, message: "Login success" , token})
    } catch (error) {
       res.json({ success: false, message: error.message });
    }
@@ -125,23 +125,20 @@ export const verifyOtp = async (req, res) => {
          maxAge: 7 * 24 * 60 * 60 * 1000, // 7 Days
       });
 
-      return res.json({ success: true, message: "User verified successfully" });
+      return res.json({ success: true, message: "User verified successfully",token });
    } catch (error) {
       res.json({ success: false, message: error.message })
    }
 }
 
 export const logout = async (req, res) => {
-   console.log("Logout function called");
-   console.log("Cookies before clearing:", req.cookies);
-
    res.clearCookie("token", {
       httpOnly: true,
       secure: true,
       sameSite: "None",
    });
 
-   console.log("Cookies after clearing:", req.cookies);
+
    res.json({ success: true, message: "Logout success" });
 };
 
@@ -173,7 +170,7 @@ export const forgetPass = async (req, res) => {
 
 export const verifyForgetPass = async (req, res) => {
    const { email, otp } = req.body;
-   console.log("verify-pass", email, otp)
+   
    if (!email || !otp) {
       return res.json({ success: false, message: "Please enter fields" })
    }
@@ -212,7 +209,7 @@ export const verifyForgetPass = async (req, res) => {
 
 export const resetPass = async (req, res) => {
    const { resetToken, newPass } = req.body;
-   console.log("TOKEN-", resetToken, newPass)
+   
    if (!resetToken || !newPass) {
       return res.json({ success: false, message: "Please fill all fields" });
    }
@@ -399,7 +396,7 @@ export const booking = async (req, res) => {
       if (!hotel) {
          return res.json({ success: false, message: "Hotel not found" })
       }
-      console.log(hotel)
+     
 
       // const existingBooking = await BookingModel.findOne({ listing: listId, user: req.userId });
 
@@ -424,7 +421,7 @@ export const Showbooking = async (req, res) => {
       if (!booking) {
          return res.json({ success: false, message: "No booking found" })
       }
-      console.log("POP", booking)
+      
       res.json({ success: true, message: "Booking found", booking })
    } catch (error) {
       res.json({ success: false, message: error.message })
@@ -444,7 +441,7 @@ export const myRequest = async (req, res) => {
             path: "user", 
             select: "name email", 
          });
-      console.log(requests)
+      
       res.json({ success: true, message: "Request found", requests })
    } catch (error) {
       res.json({ success: false, message: error.message })
@@ -582,7 +579,7 @@ export const chatHistory = async (req,res)=>{
 export const allChats = async(req,res)=>{
    try {
       const allChats = await ChatModel.find({users: req.userId}).populate("users", "name email")
-      console.log("AllChats",allChats)
+   
       res.json({success:true, allChats})
    } catch (error) {
       res.json({ error: "Internal Server Error" });
@@ -607,7 +604,7 @@ export const showChats = async (req, res) => {
          return res.status(404).json({ error: "Chat not found" });
       }
 
-      console.log(chats); // Debugging Purpose
+     
 
       // ✅ Proper response send करो
       res.json(chats);

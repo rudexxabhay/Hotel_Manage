@@ -1,4 +1,4 @@
-import  {useContext, useReducer, useState } from "react";
+import { useContext, useReducer, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserSecret, faEnvelope, faLock } from "@fortawesome/free-solid-svg-icons";
@@ -15,7 +15,7 @@ const formReducer = (formData, action) => {
 
 function Register() {
   const [state, setState] = useState("Sign up");
-  const {setIsAuth} = useContext(AuthContext)
+  const { setIsAuth } = useContext(AuthContext)
   console.log(state)
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -26,39 +26,44 @@ function Register() {
     console.log(BASE_URL)
     e.preventDefault();
     setLoading(true);
-    if(state === "Sign up"){
+    if (state === "Sign up") {
       try {
         const response = await axios.post(`${BASE_URL}/user/register`
-         ,formData
+          , formData
         )
-        if(response.data.success){
+        if (response.data.success) {
+
           toast(response.data.message)
+          localStorage.setItem("token", response.data.token); // ✅ Save for socket
+          console.log("✅ Token stored in localStorage:", response.data.token);
           navigate(`/verify-otp?email=${encodeURIComponent(formData.email)}`);
-        }else{
+        } else {
           toast.error(response.data.message)
         }
       } catch (error) {
         toast.error(error.message)
-      }finally{
+      } finally {
         setLoading(false)
       }
-    }else{
-   try {
-     const response = await axios.post(`${BASE_URL}/user/login`, formData, {withCredentials: true})
-     if(response.data.success){
-      toast.success(response.data.message);
-      setIsAuth(true)
-      navigate("/dashboard")
-     }else{
-      toast.error(response.data.message)
-     }
-   } catch (error) {
-    toast.error(error.message)
-   }finally{
-    setLoading(false)
-  }
+    } else {
+      try {
+        const response = await axios.post(`${BASE_URL}/user/login`, formData, { withCredentials: true })
+        if (response.data.success) {
+          toast.success(response.data.message);
+          localStorage.setItem("token", response.data.token); // ✅ Save for socket
+          console.log("✅ Token stored in localStorage:", response.data.token);
+          setIsAuth(true)
+          navigate("/dashboard")
+        } else {
+          toast.error(response.data.message)
+        }
+      } catch (error) {
+        toast.error(error.message)
+      } finally {
+        setLoading(false)
+      }
     }
-    
+
   }
 
   return (
@@ -114,9 +119,9 @@ function Register() {
           </span>
         </p>
       </div>
-     
+
     </div>
   );
-  }
+}
 
 export default Register;
